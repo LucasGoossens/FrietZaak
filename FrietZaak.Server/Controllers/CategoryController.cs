@@ -29,6 +29,8 @@ namespace FrietZaak.Server.Controllers
             {
                 var categories = context.Categories
                     .Include(c => c.MenuItems);
+                // dit haalt nu meteen alle menuitems per category op,
+                // individueel fetchen ook nog doen voor filteren?
 
                 return Ok(categories.ToList());
             }
