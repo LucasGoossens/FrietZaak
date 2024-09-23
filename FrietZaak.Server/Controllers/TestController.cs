@@ -7,7 +7,7 @@ namespace FrietZaak.Server.Controllers
     public class TestController : ControllerBase
     {
         [HttpPost]
-        [Route("/test/create")]
+        [Route("/test/database/create")]
         public IActionResult CreateDb()
         {
 
@@ -24,7 +24,7 @@ namespace FrietZaak.Server.Controllers
             }
         }
         [HttpPost]
-        [Route("/test/delete")]
+        [Route("/test/database/delete")]
         public IActionResult DeleteDb()
         {
 

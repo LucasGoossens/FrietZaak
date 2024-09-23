@@ -40,7 +40,7 @@ function MenuItem({ id, name, description, price }: MenuItemProps) {
     return (
         <>
             <Overlays isOpen={isOpen} modal={currentModal} />
-            <div className="w-1/2 h-32 my-2 flex justify-center">
+            <div className="w-1/2 h-38 my-2 flex justify-center">
                 <div className="flex w-11/12 h-full bg-slate-100 text-black border rounded rounded-xl shadow-md">
 
                     <div className="m-2 w-2/5 h-11/12 border border-rounded rounded-xl bg-yellow-100 bg-hamburger-one bg-center bg-cover">
