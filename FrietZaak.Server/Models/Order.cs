@@ -9,5 +9,15 @@
         public float TotalPrice { get; set; }
         public float Discount { get; set; }
         public bool Finished { get; set; }
+
+
+        public void CalculateTotalPrice()
+        {
+            TotalPrice = 0;
+            foreach(var items in Items)
+            {
+                TotalPrice += items.MenuItem.Price;
+            }
+        }
     }
 }

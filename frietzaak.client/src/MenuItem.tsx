@@ -11,6 +11,8 @@ interface MenuItemProps {
 function MenuItem({ id, name, description, price }: MenuItemProps) {
     const [isOpen, setOpen] = useState(false);
     const [currentModal, setModal] = useState(null);
+    const [quantity, setQuantity] = useState(1);
+
 
     const onClose = () => {
         setOpen(false);
@@ -36,6 +38,23 @@ function MenuItem({ id, name, description, price }: MenuItemProps) {
         setModal(<UpdateMenuItemModal onClose={onClose} id={id} name={name} description={description} price={price} />)
     }
 
+    const handleMinus = () => {
+
+        if (quantity == 0) {
+            return
+        }
+        setQuantity(quantity - 1);
+    }
+
+
+    const handlePlus = () => {
+        setQuantity(quantity + 1);
+    }
+
+    const handleAddToBasket = () => {
+
+    }
+
 
     return (
         <>
@@ -59,16 +78,16 @@ function MenuItem({ id, name, description, price }: MenuItemProps) {
                             <button onClick={handleUpdate} className="bg-red-500 px-1 p-0 mr-1 border border-red-800 hover:bg-red-400">Update</button>
                         </div>
                         <div className="self-end flex flex-row justify-evenly">
-                            <button className="p-1 font-bold bg-gray-200 mx-2">
+                            <button onClick={handleMinus} className="p-1 font-bold bg-gray-200 mx-2">
                                 -
                             </button>
                             <div className="p-1">
-                                99
+                                {quantity}
                             </div>
-                            <button className="p-1 font-bold bg-gray-200 mx-2">
+                            <button onClick={handlePlus} className="p-1 font-bold bg-gray-200 mx-2">
                                 +
                             </button>
-                            <button className="p-1 px-2 bg-black text-white mx-1">
+                            <button onClick={handleAddToBasket } className="p-1 px-2 bg-black text-white mx-1">
                                 Add
                             </button>
 
