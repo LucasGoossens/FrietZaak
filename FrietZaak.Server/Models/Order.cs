@@ -1,4 +1,7 @@
-﻿namespace FrietZaak.Server.Models
+﻿using FrietZaak.Server.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace FrietZaak.Server.Models
 {
     public class Order
     {
@@ -6,18 +9,28 @@
         public int? CustomerId { get; set; } // nullable want kunt bestellen zonder customer account
         public Customer? Customer { get; set; }
         public List<OrderLine>? Items { get; set; }
-        public decimal TotalPrice { get; set; }
-        public float Discount { get; set; }
-        public bool Finished { get; set; }
+        public decimal? TotalPrice { get; set; }
+        public float? Discount { get; set; }
+        public bool? Finished { get; set; }
 
-
-        public void CalculateTotalPrice()
+        public Order()
         {
-            TotalPrice = 0;
-            foreach(var items in Items)
+
+        }
+        public void CalculateTotalPrice()
+        {            
+            using (var context = new FrietZaakContext())
             {
-                TotalPrice += items.MenuItem.Price;
+                //lijp
+                this.TotalPrice = context.OrderLines
+                    .Where(ol => ol.OrderId == this.Id)                    
+                    .Sum(ol => ol.MenuItem.Price * ol.Quantity);
+
+                var order = context.Orders.FirstOrDefault(o => o.Id == this.Id);
+                order.TotalPrice = this.TotalPrice;
+                context.SaveChanges();
             }
+
         }
     }
 }

@@ -35,8 +35,20 @@ function ShoppingCart({ onClose }) {
     }
 
     const confirmOrder = () => {
-
-
+        // hier moet nog CustomerId by uiteindelijk
+        fetch("https://localhost:7167/order/create", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(currentCart)
+        })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => {
+                console.log("Error", error);
+            });
     }
 
 
