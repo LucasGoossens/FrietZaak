@@ -1,10 +1,10 @@
-    function CreateMenuItemModal({ onClose, categoryId }) {
+function CreateMenuItemModal({ onClose, categoryId }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
-      
+
         fetch("https://localhost:7167/menu/item/create", {
             method: "POST",
             headers: {
@@ -19,13 +19,11 @@
             })
         })
             .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                onClose() })               
+            .then(onClose())
             .catch(error => {
                 console.log("Error", error);
             });
-   }
+    }
 
     return (
         <>
@@ -39,7 +37,7 @@
                             <input
                                 type="text"
                                 id="name"
-                                name="name"                            
+                                name="name"
                                 className="mt-1 block w-full p-2 border border-black rounded-md shadow-sm bg-slate-300"
                                 required
                             />
@@ -51,7 +49,7 @@
                             </label>
                             <textarea
                                 id="description"
-                                name="description"                            
+                                name="description"
                                 className="mt-1 block w-full p-2 border border-black rounded-md shadow-sm bg-slate-300"
                                 required
                             ></textarea>
@@ -64,7 +62,8 @@
                             <input
                                 type="number"
                                 id="price"
-                                name="price"                                
+                                name="price"
+                                step="0.01"
                                 className="mt-1 block w-full p-2 border border-black rounded-md shadow-sm bg-slate-300"
                                 required
                             />

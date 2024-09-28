@@ -1,12 +1,21 @@
 ﻿using FrietZaak.Server.Data;
 using FrietZaak.Server.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 
 namespace FrietZaak.Server.Controllers
 {
     [ApiController]
     public class MenuItemController : ControllerBase
     {
+        private readonly FrietZaakContext _context;
+
+        
+        public MenuItemController(FrietZaakContext context)
+        {
+            _context = context;
+        }
+
 
         [HttpPost]
         [Route("/menu/item/create")]
@@ -18,60 +27,95 @@ namespace FrietZaak.Server.Controllers
             //    System.Diagnostics.Debug.WriteLine(menuItem.Price);
             //    System.Diagnostics.Debug.WriteLine(menuItem.CategoryId);            
 
-            using (var context = new FrietZaakContext())
-            {
-                context.MenuItems.Add(menuItem);
-                context.SaveChanges();
-                return Ok("Menu item added.");
-            }
+
+            _context.MenuItems.Add(menuItem);
+            _context.SaveChanges();
+            return Ok("Menu item added.");
+
         }
 
         [HttpGet]
-        [Route("/menu/item/get/{categoryId}")]
-        public IActionResult ReadMenuItems([FromBody] int categoryId)
+        [Route("/menu/item/get/{menuitemid}")]
+        public IActionResult GetMenuItemById(int menuitemid)
         {
-            // category controller haalt alle menuitems op voor nu
-            return BadRequest("not implemented.");
+
+            try
+            {
+                var item = _context.MenuItems.FirstOrDefault(i => i.Id == menuitemid);
+                System.Diagnostics.Debug.WriteLine(item.Name);
+
+                return Ok(item);
+            }
+            catch
+            {
+                return NotFound();
+            }
+
         }
+
+        //[HttpGet]
+        //[Route("/menu/item/get/{categoryId}")]
+        //public IActionResult ReadMenuItems([FromBody] int categoryId)
+        //{
+        //    // category controller haalt alle menuitems op voor nu
+        //    return BadRequest("not implemented.");
+        //}
 
         [HttpPut]
         [Route("/menu/item/update/{id}")]
         public IActionResult UpdateMenuItem([FromBody] MenuItem menuItem, int id)
         {
-            using (var context = new FrietZaakContext())
+
+            var result = _context.MenuItems.FirstOrDefault(m => m.Id == id);
+            if (result != null)
             {
-                var result = context.MenuItems.FirstOrDefault(m => m.Id == id);
-                if (result != null)
-                {
-                    result.Name = menuItem.Name;
-                    result.Description = menuItem.Description;
-                    result.Price = menuItem.Price;
-                    context.SaveChanges();
-                    return Ok("MenuItem updated.");
-                }
-                else
-                {
-                    return NotFound();
-                }
+                result.Name = menuItem.Name;
+                result.Description = menuItem.Description;
+                result.Price = menuItem.Price;
+                _context.SaveChanges();
+                return Ok("MenuItem updated.");
             }
+            else
+            {
+                return NotFound();
+            }
+
         }
 
         [HttpDelete]
         [Route("/menu/item/delete/{id}")]
         public IActionResult DeleteMenuItem(int id)
         {
-            using (var context = new FrietZaakContext())
-            {
-                var entity = context.MenuItems.Find(id);
 
-                if (entity != null)
+            var entity = _context.MenuItems.Find(id);
+
+            if (entity != null)
+            {
+                _context.MenuItems.Remove(entity);
+                _context.SaveChanges();
+                return Ok("Menu item deleted.");
+            }
+
+            return NotFound("Menu item does not exist.");
+        }
+
+        [HttpPost]
+        [Route("/menu/item/totalPrice")]
+        public IActionResult CalculateTotalPrice(Dictionary<int, decimal> menuItems)
+        {           
+
+            decimal totalPrice = 0;
+
+            foreach (KeyValuePair<int, decimal> entry in menuItems)
+            {
+                var menuItem = _context.MenuItems.Find(entry.Key);
+                if (menuItem != null)
                 {
-                    context.MenuItems.Remove(entity);
-                    context.SaveChanges();
-                    return Ok("Menu item deleted.");
+                    totalPrice += menuItem.Price * entry.Value;
                 }
             }
-            return NotFound("Menu item does not exist.");
+
+            return Ok(totalPrice);
         }
 
     }

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import UpdateMenuItemModal from "./Modals/UpdateMenuItemModal";
 import Overlays from "./Modals/Overlays";
+import {cartContext} from "./App"
 
 interface MenuItemProps {
     id: number;
@@ -12,6 +13,7 @@ function MenuItem({ id, name, description, price }: MenuItemProps) {
     const [isOpen, setOpen] = useState(false);
     const [currentModal, setModal] = useState(null);
     const [quantity, setQuantity] = useState(1);
+    const { currentCart, setCart } = useContext(cartContext);
 
 
     const onClose = () => {
@@ -43,17 +45,23 @@ function MenuItem({ id, name, description, price }: MenuItemProps) {
         if (quantity == 0) {
             return
         }
-        setQuantity(quantity - 1);
+        setQuantity(quantity - 1);        
     }
 
 
     const handlePlus = () => {
-        setQuantity(quantity + 1);
+        setQuantity(quantity + 1);     
     }
-
-    const handleAddToBasket = () => {
-
-    }
+    
+    const addToCart = () => {
+        const newCart = { ...currentCart };
+        if (newCart[id]) {
+            newCart[id] += quantity;
+        } else {
+            newCart[id] = quantity;
+        }
+        setCart(newCart);
+    };
 
 
     return (
@@ -68,7 +76,7 @@ function MenuItem({ id, name, description, price }: MenuItemProps) {
                     <div className="mx-2 my-2">
                         <div className="font-bold italic text-2xl">{name}</div>
                         <div className="italic">{description}</div>
-                        <div className="my-2 italic font-semibold">${price}</div>
+                        <div className="my-2 italic font-semibold">${price.toFixed(2)}</div>
                     </div>
 
                     <div className="flex flex-col justify-between">
@@ -87,7 +95,7 @@ function MenuItem({ id, name, description, price }: MenuItemProps) {
                             <button onClick={handlePlus} className="p-1 font-bold bg-gray-200 mx-2">
                                 +
                             </button>
-                            <button onClick={handleAddToBasket } className="p-1 px-2 bg-black text-white mx-1">
+                            <button onClick={addToCart} className="p-1 px-2 bg-black text-white mx-1">
                                 Add
                             </button>
 

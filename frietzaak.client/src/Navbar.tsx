@@ -5,7 +5,9 @@ import ShoppingCart from "./ShoppingCart";
 
 function Navbar() {
     const [isOpen, setOpen] = useState(false);
-    const [currentModal, setModal] = useState(null);
+    const [currentModal, setModal] = useState(null);    
+    localStorage.setItem("cart", JSON.stringify({}));
+
 
     const handleShoppingCart = () => {
         setOpen(true);
