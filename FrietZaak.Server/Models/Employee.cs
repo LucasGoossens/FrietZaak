@@ -1,6 +1,6 @@
 ﻿namespace FrietZaak.Server.Models
 {
-    public class Employee : Person
+    public class Employee : User
     {
 
         // weet niet of deze uiteindelijk andere properties krijgt als person,

@@ -9,6 +9,8 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
+import Order from './Order.tsx';
+import Authentication from './Authentication.tsx';
 
 const router = createBrowserRouter([
     {
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
             {
                 path: "menu",
                 element: <Menu />
+            },
+            {
+                path: "login",
+                element:<Authentication/>
+            },
+            {
+                path: "order",
+                element:<Order/>
             }
         ]
     },

@@ -28,8 +28,9 @@ function Navbar() {
                 <div>
                     <Link to="/" className="text-xl text-[#D9D9D9] m-2 opacity-100">Home</Link >
                     <Link to="menu" className="text-xl text-[#D9D9D9] m-2 opacity-100">Menu</Link >
+                    <Link to="order" className="text-xl text-[#D9D9D9] m-2 opacity-100">Orders</Link>
                     <Link to="" className="text-xl text-[#D9D9D9] m-2 opacity-100">Contact</Link >
-                    <Link to="" className="text-xl text-[#D9D9D9] m-2 opacity-100">Login</Link>
+                    <Link to="login" className="text-xl text-[#D9D9D9] m-2 opacity-100">Login</Link>
                     <button onClick={handleShoppingCart} className="bg-[#D9D9D9] text-black absolute right-10">Winkelmandje</button>
                 </div>
             </div>

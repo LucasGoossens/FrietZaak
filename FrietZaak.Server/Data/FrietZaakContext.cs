@@ -6,7 +6,7 @@ namespace FrietZaak.Server.Data
 {
     public class FrietZaakContext : DbContext
     {
-        public DbSet<Person> Persons { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<Order> Orders { get; set; }
