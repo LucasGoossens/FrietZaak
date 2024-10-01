@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
+import App, { userContext } from './App.tsx'
 import './index.css'
 import Menu from './Menu.tsx';
 import Index from './Index.tsx';
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element:<Index/>
+                element: <Index />
             },
             {
                 path: "menu",
@@ -27,11 +27,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "login",
-                element:<Authentication/>
+                element: <Authentication/>
             },
             {
                 path: "order",
-                element:<Order/>
+                element: <Order />
             }
         ]
     },

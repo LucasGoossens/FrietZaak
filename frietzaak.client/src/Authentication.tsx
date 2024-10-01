@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Login from "./Login";
 import Register from "./Register";
+import { userContext } from "./App"
+import { useNavigate } from "react-router-dom";
 
-function Authentication() {
+function Authentication() {    
+    const { loggedInUser, setLogin } = useContext(userContext);
+    const navigate = useNavigate();
     const [view, setView] = useState('main');
+
 
     const clickLogin = () => {
         setView('login');
@@ -41,9 +46,9 @@ function Authentication() {
                 }
                 return response.json();
             })
-            .then(data => {
-                console.log(data);
-                localStorage.setItem('user', JSON.stringify(data));
+            .then(data => {                
+                setLogin(data);    
+                navigate("/order")
             })
             .catch(error => {
                 console.log("Error", error);
@@ -79,11 +84,11 @@ function Authentication() {
         <>
 
             <div className="flex flex-col h-screen justify-center">
-                <div className="flex flex-row justify-center bg-gray-300 border-rounded rounded-lg shadow-xl self-center w-1/3 h-3/4">
+                <div className="border-2 border-slate-500 flex flex-row justify-center bg-gray-300 border-rounded rounded-lg shadow-xl self-center w-1/3 h-3/4">
 
-                    <div className="self-center flex items-center justify-evenly bg-slate-200 w-4/5 h-full">
+                    <div className="self-center flex items-center justify-evenly bg-slate-200 w-11/12 h-full shadow-lg">
                         {view == "main" &&
-                            <div className="flex flex-col self-center">
+                            <div className="flex flex-col self-center border border-white border-2 rounded rounded-lg p-10">
                                 <button onClick={clickLogin} className="text-xl border rounded-full w-full my-3 px-5 py-1 bg-slate-600">Login</button>
                                 <button onClick={clickRegister} className="text-xl border rounded-full w-full my-3 px-5 py-1 bg-slate-600">Register</button>
                             </div>

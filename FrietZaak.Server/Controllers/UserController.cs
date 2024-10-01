@@ -12,6 +12,7 @@ namespace FrietZaak.Server.Controllers
     public class UserController : ControllerBase
     {
         private readonly FrietZaakContext _context;
+        public User LoggedInUser { get; set; }
         public UserController(FrietZaakContext context)
         {
             _context = context;
@@ -57,6 +58,7 @@ namespace FrietZaak.Server.Controllers
             }
             else
             {
+                LoggedInUser = foundUser;
                 return Ok(foundUser);
             }
 
