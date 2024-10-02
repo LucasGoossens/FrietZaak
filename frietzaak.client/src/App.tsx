@@ -11,11 +11,13 @@ export const cartContext = createContext({ currentCart: {}, setCart: () => { } }
 export const userContext = createContext({ loggedInUser: {}, setLogin: () => { } })
 function App() {
     const [currentCart, setCart] = useState({});
-    const [loggedInUser, setLogin] = useState({});
-
+    const [loggedInUser, setLogin] = useState(() => {
+        const storedUser = localStorage.getItem('user');
+        return storedUser ? JSON.parse(storedUser) : null;
+    });
+     
     useEffect(() => {
-
-        console.log(loggedInUser)
+        localStorage.setItem("user", JSON.stringify(loggedInUser));        
     },[loggedInUser])
 
     return (

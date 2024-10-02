@@ -27,6 +27,7 @@ namespace FrietZaak.Server.Controllers
         public IActionResult CreateOrder([FromBody] OrderRequest orderRequest)
         {
             Order newOrder = new Order();
+            newOrder.Finished = false;
             newOrder.CustomerId = orderRequest.CustomerId;
 
             using (var _context = new FrietZaakContext())
