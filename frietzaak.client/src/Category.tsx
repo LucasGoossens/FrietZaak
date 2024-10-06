@@ -38,8 +38,8 @@ function Category({ id, name, menuItems }: CategoryProps) {
             <button onClick={handleCreateMenuItem} className="p-1 px-2">Create MenuItem</button>
             <div className="flex flex-row flex-wrap justify-between">
                 {
-                    menuItems.map((menuItem) => 
-                        <MenuItem id={menuItem.id} name={menuItem.name} description={menuItem.description} price={menuItem.price} />
+                    menuItems.map((menuItem) =>
+                        <MenuItem id={menuItem.id} name={menuItem.name} description={menuItem.description} price={menuItem.price} discount={menuItem.discount} />
                     )
                 }
 

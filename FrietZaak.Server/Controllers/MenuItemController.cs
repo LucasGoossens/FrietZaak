@@ -41,9 +41,7 @@ namespace FrietZaak.Server.Controllers
 
             try
             {
-                var item = _context.MenuItems.FirstOrDefault(i => i.Id == menuitemid);
-                System.Diagnostics.Debug.WriteLine(item.Name);
-
+                var item = _context.MenuItems.FirstOrDefault(i => i.Id == menuitemid);               
                 return Ok(item);
             }
             catch
@@ -72,8 +70,9 @@ namespace FrietZaak.Server.Controllers
                 result.Name = menuItem.Name;
                 result.Description = menuItem.Description;
                 result.Price = menuItem.Price;
+                result.Discount = menuItem.Discount;
                 _context.SaveChanges();
-                return Ok("MenuItem updated.");
+                return Ok();
             }
             else
             {
@@ -111,7 +110,7 @@ namespace FrietZaak.Server.Controllers
                 var menuItem = _context.MenuItems.Find(entry.Key);
                 if (menuItem != null)
                 {
-                    totalPrice += menuItem.Price * entry.Value;
+                    totalPrice += (menuItem.Price - menuItem.Discount) * entry.Value;
                 }
             }
 

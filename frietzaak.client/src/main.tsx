@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import Order from './Order.tsx';
 import Authentication from './Authentication.tsx';
+import OrderAdmin from './OrderAdmin.tsx';
 
 const router = createBrowserRouter([
     {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
             {
                 path: "order",
                 element: <Order />
+            },
+            {
+                path: "order/admin",
+                element: <OrderAdmin />
             }
         ]
     },

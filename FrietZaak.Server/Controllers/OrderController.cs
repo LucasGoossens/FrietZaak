@@ -57,10 +57,12 @@ namespace FrietZaak.Server.Controllers
         {
             public int Id { get; set; }
             public int CustomerId { get; set; }
+            public string? CustomerName { get; set; }
             public List<OrderLineDTO> Items { get; set; }
             public decimal? TotalPrice { get; set; }
-            public float? Discount { get; set; }
+            public decimal? Discount { get; set; }
             public bool? Finished { get; set; }
+            public bool TransactionCompleted { get; set; }
         }
 
         public class OrderLineDTO
@@ -68,6 +70,7 @@ namespace FrietZaak.Server.Controllers
             public int MenuItemId { get; set; }
             public string MenuItemName { get; set; }
             public decimal MenuItemPrice { get; set; }
+            public decimal MenuItemDiscount { get; set; }
             public int Quantity { get; set; }
         }
 
@@ -77,7 +80,8 @@ namespace FrietZaak.Server.Controllers
         public IActionResult GetCurrentOrder(int userid)
         {
             var order = _context.Orders
-                .FirstOrDefault(o => o.CustomerId == userid);
+                .Where(o => o.TransactionCompleted == false)
+                .FirstOrDefault(o => o.CustomerId == userid);                
 
             if (order == null)
                 return NotFound();
@@ -90,7 +94,8 @@ namespace FrietZaak.Server.Controllers
                     MenuItemId = ol.MenuItem.Id,
                     MenuItemName = ol.MenuItem.Name,
                     MenuItemPrice = ol.MenuItem.Price,
-                    Quantity = ol.Quantity
+                    Quantity = ol.Quantity,
+                    MenuItemDiscount = ol.MenuItem.Discount
                 }).ToList();
 
             var orderDto = new OrderDTO
@@ -100,11 +105,101 @@ namespace FrietZaak.Server.Controllers
                 Items = orderLines,
                 TotalPrice = order.TotalPrice,
                 Discount = order.Discount,
-                Finished = order.Finished
+                Finished = order.Finished,
+                TransactionCompleted = order.TransactionCompleted
             };
 
             return Ok(orderDto);
         }
 
+        [HttpGet]
+        [Route("order/get/test")]
+        public IActionResult GetAllOrders()
+        {
+            var orders = _context.Orders;
+            return Ok(orders);
+        }
+
+
+        [HttpGet]
+        [Route("/order/get/notfinished")]
+        public IActionResult GetAllUnfinishedOrders()
+        {
+            var orders = _context.Orders
+                .Include(o => o.Customer)
+                .Where(o => o.TransactionCompleted == false)
+                .Select(order => new OrderDTO
+                {
+                    Id = order.Id,
+                    CustomerId = order.CustomerId,
+                    CustomerName = order.Customer.Name,
+                    Items = _context.OrderLines
+                        .Where(ol => ol.OrderId == order.Id)
+                        .Select(ol => new OrderLineDTO
+                        {
+                            MenuItemId = ol.MenuItem.Id,
+                            MenuItemName = ol.MenuItem.Name,
+                            MenuItemPrice = ol.MenuItem.Price,
+                            Quantity = ol.Quantity
+                        }).ToList(),
+                    TotalPrice = order.TotalPrice,
+                    Discount = order.Discount,
+                    Finished = order.Finished,
+                    TransactionCompleted = order.TransactionCompleted
+                })
+                .ToList();
+
+            if (orders == null || orders.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(orders);
+        }
+
+
+        [HttpPut]
+        [Route("/order/setfinished/{id}")]
+        public IActionResult SetOrderAsFinished(int id)
+        {
+            var order = _context.Orders
+                .FirstOrDefault(o => o.Id == id);
+
+            if (order == null)
+            {
+                return NotFound(new { message = "Order not found" });
+            }
+
+            order.Finished = true;
+            _context.SaveChanges();
+
+
+            return Ok(new { message = $"Order {id} set as finished.", orderId = id });
+
+        }
+
+        [HttpPut]
+        [Route("order/transactioncompleted/{id}")]
+        public IActionResult CompleteTransaction(int id)
+        {
+            var order = _context.Orders
+                .FirstOrDefault(o => o.Id == id);
+
+            if (order == null)
+            {
+                return NotFound(new { message = "Order not found" });
+            }
+
+            order.TransactionCompleted = true;
+            _context.SaveChanges();
+
+
+            return Ok(new { message = $"Order {id} transaction completed.", orderId = id });
+
+        }
+
+
+
     }
 }
+

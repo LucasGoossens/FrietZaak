@@ -46,7 +46,7 @@ function ShoppingCart({ onClose }) {
 
     const confirmOrder = () => {
 
-        if (loggedInUser.id == null) {
+        if (loggedInUser == null) {
             navigate("/login")
             return;
         }

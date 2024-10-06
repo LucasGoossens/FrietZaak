@@ -19,7 +19,7 @@ function CreateMenuItemModal({ onClose, categoryId }) {
             })
         })
             .then(response => response.json())
-            .then(onClose())
+            .then(() => { onClose(); window.location.reload(); })
             .catch(error => {
                 console.log("Error", error);
             });
@@ -28,7 +28,7 @@ function CreateMenuItemModal({ onClose, categoryId }) {
     return (
         <>
             <div onClick={onClose} className="fixed inset-0 flex justify-center items-center w-screen h-screen bg-black bg-black/70 z-6">
-                <div onClick={(e) => e.stopPropagation()} className="fixed w-1/3 h-1/2 bg-slate-100 shadow-lg rounded text-black">
+                <div onClick={(e) => e.stopPropagation()} className="fixed w-1/3 h-fit bg-slate-100 shadow-lg rounded text-black">
                     <form onSubmit={handleSubmit} className="p-4">
                         <div className="mb-4">
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700">

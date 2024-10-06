@@ -8,7 +8,7 @@ type CurrentOrder = {
     customerId: number;
     items: Array<Items>;
     totalPrice: number;
-    finished: bool;
+    finished: boolean;
 }
 
 type Items = {
@@ -16,6 +16,7 @@ type Items = {
     menuItemName: string,
     menuItemPrice: number,
     quantity: number;
+    menuItemDiscount: number;
 }
 
 function Order() {
@@ -25,14 +26,25 @@ function Order() {
     useEffect(() => {
         if (loggedInUser.id == null) {
             navigate("/login")
+        } else if (loggedInUser.id == 1) {
+            navigate("/order/admin")
         }
     }, []);
 
     const [currentOrder, setCurrentOrder] = useState<CurrentOrder | null>(null);
 
     const getCurrentOrder = () => {
+        if (loggedInUser.id == null) {
+            setCurrentOrder(null)
+            return;
+        }
         fetch(`https://localhost:7167/order/get/${loggedInUser.id}`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return Promise.reject();
+                }
+                return response.json();
+            })
             .then(data => {
                 setCurrentOrder(data);
                 console.log(data);
@@ -42,6 +54,7 @@ function Order() {
     }
     useEffect(() => {
         getCurrentOrder();
+        console.log(currentOrder)
     }, [loggedInUser]);
 
 
@@ -65,32 +78,39 @@ function Order() {
 
     return (
         <>
-            <div className="h-screen text-black w-3/5 mx-60 bg-gray-300 flex flex-col justify-center">
-                <div className="h-4/5 flex flex-col justify-evenly">
+            <div className="h-max text-black pt-20 w-3/5 mx-60 bg-gray-300 flex flex-col justify-center">
+                <div className="h-fit flex flex-col justify-evenly">
                     <div className="text-black text-lg font-semibold border-b-4 px-2">
                         Current Order
                     </div>
                     <div className="bg-slate-100 h-1/2 p-2">
-                        {
-                            currentOrder != null ? (
-                                <>
-                                    <div className="bg-slate-400 p-1 text-lg border rounded rounded-lg">
+                        {!currentOrder &&
+                            <div>No current order.</div>
+                        }
+
+                        {currentOrder &&
+                            <>
+                                <div className="border rounded border-slate-500 border-2 rounded-xl p-2 mx-2 bg-gray-100">
+                                    <div className="bg-slate-300 p-4 font-semibold text-lg border rounded rounded-lg">
                                         Order ID: #<b className="text-xl">{currentOrder.id}</b>
                                     </div>
 
-                                    <div className="border-b flex flex-row justify-between">
+                                    <div className="border-b-2 pt-2 border-slate-400 flex flex-row justify-between">
                                         <div className="w-1/3 h-8 font-bold px-1">Product</div>
                                         <div className="w-1/3 h-8 font-bold px-1">Price</div>
                                         <div className="w-1/3 h-8 font-bold px-1">Quantity</div>
                                     </div>
 
-                                    {currentOrder?.items.map((item) => (
-                                        <CurrentOrderMenuItem key={item.menuItemId} item={item} />
-                                    ))}
+                                    {currentOrder.items && currentOrder.items.length > 0 && (
+                                        currentOrder.items.map((item) => (
+                                            <CurrentOrderMenuItem key={item.menuItemId} item={item} />
+                                        ))
+                                    )}
 
-                                    <div className="flex flex-row justify-between px-1 py-4">
+                                    <div className="flex flex-row justify-between bg-slate-300 my-2 px-2 py-4 border-2">
+
                                         <div className="w-1/3"></div>
-                                        <div className="w-1/3 font-semibold">
+                                        <div className="w-1/3 font-bold">
                                             Total: ${currentOrder.totalPrice}
                                         </div>
 
@@ -114,16 +134,17 @@ function Order() {
                                             </button>
                                         </div>
                                     </div>
-                                </>
-                            ) : (
-                                <div>No current order.</div>
-                            )
+                                </div>
+
+                            </>
                         }
+
+
 
 
                     </div>
 
-                    <div className="text-black text-lg font-semibold border-b-4 ">
+                    <div className="text-black text-lg font-semibold border-b-4">
                         Order History
                     </div>
                     <div className="bg-slate-100 h-full">No order history</div>

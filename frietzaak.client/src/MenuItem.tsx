@@ -1,15 +1,16 @@
 import { useState, useContext } from "react";
 import UpdateMenuItemModal from "./Modals/UpdateMenuItemModal";
 import Overlays from "./Modals/Overlays";
-import {cartContext} from "./App"
+import { cartContext } from "./App"
 
 interface MenuItemProps {
     id: number;
     name: string;
     description: string;
     price: number;
+    discount: number;
 }
-function MenuItem({ id, name, description, price }: MenuItemProps) {
+function MenuItem({ id, name, description, price, discount }: MenuItemProps) {
     const [isOpen, setOpen] = useState(false);
     const [currentModal, setModal] = useState(null);
     const [quantity, setQuantity] = useState(1);
@@ -37,7 +38,7 @@ function MenuItem({ id, name, description, price }: MenuItemProps) {
 
     const handleUpdate = () => {
         setOpen(true)
-        setModal(<UpdateMenuItemModal onClose={onClose} id={id} name={name} description={description} price={price} />)
+        setModal(<UpdateMenuItemModal onClose={onClose} id={id} name={name} description={description} price={price} discount={discount} />)
     }
 
     const handleMinus = () => {
@@ -45,14 +46,14 @@ function MenuItem({ id, name, description, price }: MenuItemProps) {
         if (quantity == 0) {
             return
         }
-        setQuantity(quantity - 1);        
+        setQuantity(quantity - 1);
     }
 
 
     const handlePlus = () => {
-        setQuantity(quantity + 1);     
+        setQuantity(quantity + 1);
     }
-    
+
     const addToCart = () => {
         const newCart = { ...currentCart };
         if (newCart[id]) {
@@ -76,7 +77,11 @@ function MenuItem({ id, name, description, price }: MenuItemProps) {
                     <div className="mx-2 my-2">
                         <div className="font-bold italic text-2xl">{name}</div>
                         <div className="italic">{description}</div>
-                        <div className="my-2 italic font-semibold">${price.toFixed(2)}</div>
+                        {discount > 0 ?
+                            (<><div className="flex flex-row font-bold "><div className="pr-2 italic font-bold line-through text-red-600">${price.toFixed(2)}</div>${price.toFixed(2) - discount.toFixed(2)}</div></>)
+                            :
+                            (<div className="my-2 italic font-semibold">${price.toFixed(2)}</div>)
+                        }
                     </div>
 
                     <div className="flex flex-col justify-between">

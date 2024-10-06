@@ -58,7 +58,7 @@ function ShoppingCartMenuItem({ id, quantity }) {
                     <div className="border-r-2 w-2/5 flex flex-col justify-between">
                         <div className="font-bold">{menuItem.name}</div>
                         <div className="">{menuItem.description}</div>
-                        <div className="italic">${menuItem.price}</div>
+                        <div className="italic">${menuItem.price - menuItem.discount}</div>
                     </div>
 
                     <div className="border-r-2 w-2/5">

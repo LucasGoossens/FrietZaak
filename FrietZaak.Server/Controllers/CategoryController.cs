@@ -21,6 +21,13 @@ namespace FrietZaak.Server.Controllers
             }
         }       
 
+        public class CategoryDTO
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public List<MenuItem>? MenuItems { get; set; }
+        }
+
         [HttpGet]
         [Route("/menu/category/get")]
         public IActionResult GetAllCategories()
@@ -28,7 +35,13 @@ namespace FrietZaak.Server.Controllers
             using (var context = new FrietZaakContext())
             {
                 var categories = context.Categories
-                    .Include(c => c.MenuItems);
+                    .Include(c => c.MenuItems)
+                    .Select(c => new CategoryDTO
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        MenuItems = c.MenuItems
+                    });
                 // dit haalt nu meteen alle menuitems per category op,
                 // individueel fetchen ook nog doen voor filteren?
 
