@@ -1,17 +1,37 @@
+import { useEffect, useState } from "react";
+import DiscountPreviewMenuItem from "./DiscountPreviewMenuItem";
 import Navbar from "./Navbar";
 
 function Index() {
+    const [previewItems, setPreview] = useState([]);
+
+    const getDiscountPreviewMenuItem = () => {
+        fetch(`https://localhost:7167/menu/item/get/discount`)
+            .then(response => response.json())
+            .then(data => {
+                setPreview(data);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    useEffect(() => {
+        getDiscountPreviewMenuItem();
+    }, []);
+
+
     return (
         <>
-            <div className="flex flex-col w-full h-screen bg-[#F4F97A]">  
-                <div className="h-3/4 mx-96 flex items-center text-black text-xl">
-                    Frietzaak 90000000000000
+            <div className="flex flex-col w-full h-screen bg-cover bg-center bg-frontpage">
+                <div className="h-3/4 mx-96 flex items-center text-white font-bold text-8xl">
+                    F R I E T Z  A A K
                 </div>
 
                 <div className="flex flex-row h-1/3 bg-gray-200 justify-evenly items-center border-t-2 border-gray-500">
-                    <div className="h-3/4 w-1/5 bg-slate-100 border-rounded rounded-xl shadow-xl text-black">Menu preview one</div>
-                    <div className="h-3/4 w-1/5 bg-slate-100 border-rounded rounded-xl shadow-xl text-black">Menu preview one</div>
-                    <div className="h-3/4 w-1/5 bg-slate-100 border-rounded rounded-xl shadow-xl text-black">Menu preview one</div>
+
+                    {previewItems.length && previewItems.map((item) => {
+                        return (<DiscountPreviewMenuItem key={item.id} item={item} />)
+                    }
+                    )}
+
                 </div>
             </div>
         </>

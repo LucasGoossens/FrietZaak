@@ -7,7 +7,8 @@ export default {
     theme: {
         extend: {
             backgroundImage: {
-                'hamburger-one': "url('/src/assets/hamburgerOne.jpeg')",                
+                'hamburger-one': "url('/src/assets/hamburgerOne.jpeg')",     
+                'frontpage':"linear-gradient(to left bottom, rgba(43, 108, 176, 0.6), rgba(43, 108, 176, 0.1)), url('/src/assets/FrontpagePic.jpg')"
             }
 },
     },

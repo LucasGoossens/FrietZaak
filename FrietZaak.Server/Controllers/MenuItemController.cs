@@ -51,6 +51,24 @@ namespace FrietZaak.Server.Controllers
 
         }
 
+        [HttpGet]
+        [Route("/menu/item/get/discount")]
+        public IActionResult GetDiscountItems()
+        {
+            int numberOfResults = 3;
+            try
+            {
+                var items = _context.MenuItems
+                    .Where(m => m.Discount > 0)
+                    .Take(numberOfResults)
+                    .ToList();
+                return Ok(items);
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
         //[HttpGet]
         //[Route("/menu/item/get/{categoryId}")]
         //public IActionResult ReadMenuItems([FromBody] int categoryId)

@@ -44,6 +44,10 @@ namespace FrietZaak.Server.Controllers
                     });
                 // dit haalt nu meteen alle menuitems per category op,
                 // individueel fetchen ook nog doen voor filteren?
+                if(categories == null)
+                {
+                    return NotFound();
+                }
 
                 return Ok(categories.ToList());
             }
