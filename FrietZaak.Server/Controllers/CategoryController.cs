@@ -1,5 +1,6 @@
 ﻿using FrietZaak.Server.Data;
 using FrietZaak.Server.Models;
+using FrietZaak.Server.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,12 +22,6 @@ namespace FrietZaak.Server.Controllers
             }
         }       
 
-        public class CategoryDTO
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public List<MenuItem>? MenuItems { get; set; }
-        }
 
         [HttpGet]
         [Route("/menu/category/get")]

@@ -1,5 +1,6 @@
 ﻿using FrietZaak.Server.Data;
 using FrietZaak.Server.Models;
+using FrietZaak.Server.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -51,28 +52,7 @@ namespace FrietZaak.Server.Controllers
             }
             return Ok("New order created");
             // hier misschien dan nog OrderId teruggeven
-        }
-
-        public class OrderDTO
-        {
-            public int Id { get; set; }
-            public int CustomerId { get; set; }
-            public string? CustomerName { get; set; }
-            public List<OrderLineDTO> Items { get; set; }
-            public decimal? TotalPrice { get; set; }
-            public decimal? Discount { get; set; }
-            public bool? Finished { get; set; }
-            public bool TransactionCompleted { get; set; }
-        }
-
-        public class OrderLineDTO
-        {
-            public int MenuItemId { get; set; }
-            public string MenuItemName { get; set; }
-            public decimal MenuItemPrice { get; set; }
-            public decimal MenuItemDiscount { get; set; }
-            public int Quantity { get; set; }
-        }
+        }        
 
 
         [HttpGet]
