@@ -21,9 +21,53 @@ namespace FrietZaak.Server.Controllers
         [HttpPost]
         [Route("/user/create")]
         public IActionResult CreateUser([FromBody] User user)
-        {
+        {            
             _context.Users.Add(user);
             _context.SaveChanges();
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            _context.Entry(user).State = EntityState.Detached;
+
+            if (user.Id == 1)
+            {
+
+                var employee = new Employee
+                {
+                    
+                    Name = user.Name,
+                    Email = user.Email,
+                    Password = user.Password,
+                    IsAdmin = true
+                  
+                };
+                
+                _context.Employees.Add(employee);
+                                
+                                
+                _context.SaveChanges();
+
+
+            }
+            else
+            {
+
+                var customer = new Customer
+                {
+                    
+                    Name = user.Name,
+                    Email = user.Email,
+                    Password = user.Password,                    
+
+                };
+
+                _context.Customers.Add(customer);                
+
+                _context.SaveChanges();
+            }
+
             return Ok("User created.");
         }
 

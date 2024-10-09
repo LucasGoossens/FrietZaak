@@ -104,7 +104,7 @@ namespace FrietZaak.Server.Controllers
         [HttpGet]
         [Route("/order/get/notfinished")]
         public IActionResult GetAllUnfinishedOrders()
-        {
+        {            
             var orders = _context.Orders
                 .Include(o => o.Customer)
                 .Where(o => o.TransactionCompleted == false)

@@ -2,7 +2,6 @@
 {
     public class Employee : User
     {
-        public bool IsAdmin { get; set; }
-
+        public bool IsAdmin { get; set; }        
     }
 }
