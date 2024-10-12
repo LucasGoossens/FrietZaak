@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
 import { cartContext } from "./App"
-import Menu from './Menu';
 
 function ShoppingCartMenuItem({ id, quantity }) {
     const [menuItem, setItem] = useState({});
@@ -51,8 +50,7 @@ function ShoppingCartMenuItem({ id, quantity }) {
             {!menuItem ? <div>Loading...</div> :
 
                 <div className="border-b-2 my-1 flex flex-row h-1/5">
-                    <div className="border-r-2 w-1/5">
-                        {id}
+                    <div className="border-r-2 w-1/5 bg-hamburger-one bg-center bg-cover">                        
                     </div>
 
                     <div className="border-r-2 w-2/5 flex flex-col justify-between">

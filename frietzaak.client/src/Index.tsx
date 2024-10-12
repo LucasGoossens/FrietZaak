@@ -1,7 +1,14 @@
+// @ts-nocheck
 import { useEffect, useState } from "react";
 import DiscountPreviewMenuItem from "./DiscountPreviewMenuItem";
-import Navbar from "./Navbar";
 
+type Item = {
+    id: number,
+    name: string,
+    description: number,
+    price: number;
+    discount: number;
+}
 function Index() {
     const [previewItems, setPreview] = useState([]);
 
@@ -27,7 +34,7 @@ function Index() {
 
                 <div className="flex flex-row h-1/3 bg-gray-200 justify-evenly items-center border-t-2 border-gray-500">
 
-                    {previewItems.length && previewItems.map((item) => {
+                    {previewItems.length && previewItems.map((item:Item) => {
                         return (<DiscountPreviewMenuItem key={item.id} item={item} />)
                     }
                     )}

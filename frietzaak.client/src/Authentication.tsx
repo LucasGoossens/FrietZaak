@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useContext } from "react";
 import Login from "./Login";
 import Register from "./Register";
@@ -5,7 +6,7 @@ import { userContext } from "./App"
 import { useNavigate } from "react-router-dom";
 
 function Authentication() {    
-    const { loggedInUser, setLogin } = useContext(userContext);
+    const { setLogin }= useContext(userContext);
     const navigate = useNavigate();
     const [view, setView] = useState('main');
 

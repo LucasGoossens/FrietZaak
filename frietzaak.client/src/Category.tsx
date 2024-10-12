@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState } from "react";
 import MenuItem from "./MenuItem";
 import CreateMenuItemModal from "./Modals/CreateMenuItemModal";

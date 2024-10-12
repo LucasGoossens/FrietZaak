@@ -55,7 +55,7 @@ function MenuItem({ id, name, description, price, discount }: MenuItemProps) {
     }
 
     const addToCart = () => {
-        const newCart = { ...currentCart };
+        const newCart:any = { ...currentCart };
         if (newCart[id]) {
             newCart[id] += quantity;
         } else {

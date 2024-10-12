@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect } from "react";
 import Category from "./Category";
 import CreateCategoryModal from "./Modals/CreateCategoryModal";

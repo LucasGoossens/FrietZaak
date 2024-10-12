@@ -1,4 +1,4 @@
-﻿namespace FrietZaak.Server.ViewModels
+﻿ namespace FrietZaak.Server.ViewModels
 {
     public class OrderDTO
     {

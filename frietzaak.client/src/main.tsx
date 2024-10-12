@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App, { userContext } from './App.tsx'
+import App from './App.tsx'
 import './index.css'
 import Menu from './Menu.tsx';
 import Index from './Index.tsx';
@@ -12,6 +12,7 @@ import {
 import Order from './Order.tsx';
 import Authentication from './Authentication.tsx';
 import OrderAdmin from './OrderAdmin.tsx';
+import Statistics from './Statistics.tsx';
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
             {
                 path: "order/admin",
                 element: <OrderAdmin />
+            },
+            {
+                path: "order/admin/statistics",
+                element: <Statistics/>
             }
         ]
     },

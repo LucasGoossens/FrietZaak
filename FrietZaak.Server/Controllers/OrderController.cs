@@ -52,7 +52,7 @@ namespace FrietZaak.Server.Controllers
             }
             return Ok("New order created");
             // hier misschien dan nog OrderId teruggeven
-        }        
+        }
 
 
         [HttpGet]
@@ -61,7 +61,7 @@ namespace FrietZaak.Server.Controllers
         {
             var order = _context.Orders
                 .Where(o => o.TransactionCompleted == false)
-                .FirstOrDefault(o => o.CustomerId == userid);                
+                .FirstOrDefault(o => o.CustomerId == userid);
 
             if (order == null)
                 return NotFound();
@@ -104,7 +104,7 @@ namespace FrietZaak.Server.Controllers
         [HttpGet]
         [Route("/order/get/notfinished")]
         public IActionResult GetAllUnfinishedOrders()
-        {            
+        {
             var orders = _context.Orders
                 .Include(o => o.Customer)
                 .Where(o => o.TransactionCompleted == false)
@@ -175,6 +175,39 @@ namespace FrietZaak.Server.Controllers
 
 
             return Ok(new { message = $"Order {id} transaction completed.", orderId = id });
+
+        }
+
+
+        
+
+        [HttpGet]
+        [Route("order/admin/statistics")]
+        public IActionResult GetStatistics()
+        {
+
+            var statistics = _context.OrderLines
+                .Where(ol => ol.Order.TransactionCompleted == true)
+                .GroupBy(ol => new { ol.MenuItemId, ol.MenuItem.Name, ol.MenuItem.Price })
+                .Select(g => new StatisticsViewModel
+                {
+                    MenuItemId = g.Key.MenuItemId,
+                    MenuItemName = g.Key.Name,
+                    MenuItemPrice = g.Key.Price,
+                    Quantity = g.Sum(ol => ol.Quantity) 
+                })
+                .ToList();
+
+
+            if (statistics == null || statistics.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(statistics);       
+
+
+
 
         }
 
