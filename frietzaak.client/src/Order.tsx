@@ -20,7 +20,7 @@ type Items = {
 }
 
 function Order() {
-    const { loggedInUser, setLogin } = useContext(userContext);
+    const { loggedInUser } = useContext(userContext);
     const navigate = useNavigate();
 
     useEffect(() => {

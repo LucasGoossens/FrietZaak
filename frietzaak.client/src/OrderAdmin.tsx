@@ -20,7 +20,7 @@ type Items = {
 }
 
 function OrderAdmin() {
-    const { loggedInUser, setLogin } = useContext(userContext);
+    const { loggedInUser} = useContext(userContext);
     const navigate = useNavigate();
     const [allOrders, setOrders] = useState<Array<NewOrder>>([]);
 

@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useContext } from 'react';
 import { cartContext } from "./App"
 
-function ShoppingCartMenuItem({ id, quantity }) {
-    const [menuItem, setItem] = useState({});
-    const { currentCart, setCart } = useContext(cartContext);
+function ShoppingCartMenuItem({ id, quantity }:any ) {
+    const [menuItem, setItem]:any = useState({});
+    const { currentCart, setCart }: any = useContext(cartContext);
 
     const getShoppingCartMenuItem = () => {
         fetch(`https://localhost:7167/menu/item/get/${id}`)

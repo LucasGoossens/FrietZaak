@@ -4,8 +4,8 @@ import { cartContext, userContext } from "./App"
 import { useNavigate } from "react-router-dom";
 
 function ShoppingCart({ onClose }) {
-    const { currentCart, setCart } = useContext(cartContext);
-    const { loggedInUser, setLogin } = useContext(userContext);
+    const { currentCart, setCart }: any = useContext(cartContext);
+    const { loggedInUser} = useContext(userContext);
 
     const navigate = useNavigate();
 
@@ -64,6 +64,7 @@ function ShoppingCart({ onClose }) {
         })
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 navigate("/order");
                 setCart({});
             })

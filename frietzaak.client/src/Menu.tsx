@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { userContext } from "./App"
 import Category from "./Category";
 import CreateCategoryModal from "./Modals/CreateCategoryModal";
 import Overlays from "./Modals/Overlays";
@@ -11,6 +12,7 @@ interface Category {
 }
 
 function Menu() {
+    const { loggedInUser } = useContext(userContext);
     const [categories, setCategories] = useState([]);
     const [isOpen, setOpen] = useState(false);
     const [currentModal, setModal] = useState(null);
@@ -41,9 +43,10 @@ function Menu() {
         <>
             <Overlays isOpen={isOpen} modal={currentModal} />
             <div className="mx-60 h-screen bg-gray-300 overflow-x-hidden">
-                <div className="mt-16 text-black bg-gray-500 p-1 border-rounded rounded-lg">
-                    <button onClick={handleCreateCategory} className="p-2 bg-white">New Category</button>
-                </div>
+                {loggedInUser.id == 1 &&
+                    <div className="mt-16 text-black bg-gray-500 p-1 border-rounded rounded-lg">
+                        <button onClick={handleCreateCategory} className="p-2 bg-white">New Category</button>
+                    </div>}
                 {categories.map((category: Category) => {
                     return (
                         <Category key={category.id} id={category.id} name={category.name} menuItems={category.menuItems} />

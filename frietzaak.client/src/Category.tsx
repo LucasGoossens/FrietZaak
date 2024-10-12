@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { userContext } from "./App"
 import MenuItem from "./MenuItem";
 import CreateMenuItemModal from "./Modals/CreateMenuItemModal";
 import Overlays from "./Modals/Overlays";
@@ -11,6 +12,7 @@ interface CategoryProps {
 }
 
 function Category({ id, name, menuItems }: CategoryProps) {
+    const { loggedInUser } = useContext(userContext);
     const [isOpen, setOpen] = useState(false);
     const [currentModal, setModal] = useState(null);
 
@@ -26,7 +28,7 @@ function Category({ id, name, menuItems }: CategoryProps) {
         setOpen(false);
         setModal(null);
     }
-    
+
     const handleCreateMenuItem = () => {
         setOpen(true);
         setModal(<CreateMenuItemModal onClose={onClose} categoryId={id} />)
@@ -35,8 +37,10 @@ function Category({ id, name, menuItems }: CategoryProps) {
     return (
         <>
             <Overlays isOpen={isOpen} modal={currentModal} />
-            <div className="font-bold text-lg mx-5 mt-20 text-black text-xl">{id} {name}:</div>
-            <button onClick={handleCreateMenuItem} className="p-1 px-2">Create MenuItem</button>
+            <div className="font-bold text-lg mx-5 mt-20 text-black text-4xl">{name}:</div>
+            {loggedInUser.id == 1 &&
+                <button onClick={handleCreateMenuItem} className="p-1 px-2">Create MenuItem</button>
+            }
             <div className="flex flex-row flex-wrap justify-between">
                 {
                     menuItems.map((menuItem) =>

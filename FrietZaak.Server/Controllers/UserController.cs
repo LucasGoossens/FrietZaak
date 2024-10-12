@@ -19,7 +19,7 @@ namespace FrietZaak.Server.Controllers
         [HttpPost]
         [Route("/user/create")]
         public IActionResult CreateUser([FromBody] User user)
-        {            
+        {
             _context.Users.Add(user);
             _context.SaveChanges();
             if (user == null)
@@ -34,17 +34,17 @@ namespace FrietZaak.Server.Controllers
 
                 var employee = new Employee
                 {
-                    
+
                     Name = user.Name,
                     Email = user.Email,
                     Password = user.Password,
                     IsAdmin = true
-                  
+
                 };
-                
+
                 _context.Employees.Add(employee);
-                                
-                                
+
+
                 _context.SaveChanges();
 
 
@@ -54,14 +54,14 @@ namespace FrietZaak.Server.Controllers
 
                 var customer = new Customer
                 {
-                    
+
                     Name = user.Name,
                     Email = user.Email,
-                    Password = user.Password,                    
+                    Password = user.Password,
 
                 };
 
-                _context.Customers.Add(customer);                
+                _context.Customers.Add(customer);
 
                 _context.SaveChanges();
             }
@@ -78,8 +78,9 @@ namespace FrietZaak.Server.Controllers
             {
                 this.Email = email;
                 this.Password = password;
+
             }
-            
+
         }
 
         [HttpPost]
@@ -110,9 +111,11 @@ namespace FrietZaak.Server.Controllers
         [Route("/user/getall")]
         public IActionResult GetAllUsers()
         {
-            return Ok(_context.Users.ToList());
-           
+            var users = _context.Users.ToList();
+             
+            return Ok(users);
         }
+
 
     }
 }
