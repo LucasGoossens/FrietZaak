@@ -85,9 +85,9 @@ function Authentication() {
         <>
 
             <div className="flex flex-col h-screen justify-center">
-                <div className="border-2 border-slate-500 flex flex-row justify-center bg-gray-100 border-rounded rounded-lg shadow-xl self-center w-1/3 h-3/4">
+                <div className="border-2  flex flex-row justify-center bg-slate-200 border-rounded rounded-lg shadow-lg self-center w-1/4 h-3/4">
 
-                    <div className="self-center flex items-center justify-evenly bg-slate-200 w-11/12 h-full shadow-lg">
+                    <div className="self-center flex items-center justify-evenly bg-slate-200 w-11/12 h-full shadow-2xl">
                         {view == "main" &&
                             <div className="flex flex-col self-center border border-white border-2 rounded rounded-lg p-10">
                                 <button onClick={clickLogin} className="text-xl border rounded-full border-4 border-black w-full my-3 px-5 py-1 bg-slate-600">Login</button>

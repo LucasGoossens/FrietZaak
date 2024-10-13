@@ -81,9 +81,9 @@ function MenuItem({ id, name, description, price, discount }: MenuItemProps) {
                         <div className="font-bold italic text-2xl">{name}</div>
                         <div className="italic">{description}</div>
                         {discount > 0 ?
-                            (<><div className="flex flex-row font-bold text-red-600"><div className="pr-2 italic font-bold line-through text-black">${price.toFixed(2)}</div>${(price - discount).toFixed(2)}</div></>)
+                            (<><div className="text-xl flex flex-row font-bold text-red-600"><div className="pr-2 italic font-bold line-through text-black">${price.toFixed(2)}</div>${(price - discount).toFixed(2)}</div></>)
                             :
-                            (<div className="my-2 italic font-semibold ">${price.toFixed(2)}</div>)
+                            (<div className="text-xl my-2 italic font-semibold ">${price.toFixed(2)}</div>)
                         }
                     </div>
 

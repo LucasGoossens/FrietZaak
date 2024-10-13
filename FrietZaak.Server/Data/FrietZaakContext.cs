@@ -14,7 +14,7 @@ namespace FrietZaak.Server.Data
         public DbSet<OrderLine> OrderLines { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        // database wordt aangemaakt in TestController.cs, is handiger met swagger tijdens testen
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connection = "Data Source=.;Initial Catalog=FrietZaakDb;Integrated Security=true; TrustServerCertificate=True;";
@@ -24,63 +24,63 @@ namespace FrietZaak.Server.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>()
-              .HasBaseType<User>(); // Maps Customer to User table (TPH or TPT depending on config)
+              .HasBaseType<User>(); 
 
             modelBuilder.Entity<Employee>()
-                .HasBaseType<User>(); // Maps Employee to User table (TPH or TPT depending on config)
+                .HasBaseType<User>(); 
 
-            // Define the primary key for the User class
+            
             modelBuilder.Entity<User>()
                 .HasKey(u => u.Id);
 
             modelBuilder.Entity<User>()
-              .HasDiscriminator<string>("UserType")  // Add a discriminator column
+              .HasDiscriminator<string>("UserType")  
               //.HasValue<User>("User")
               .HasValue<Customer>("Customer")
               .HasValue<Employee>("Employee");
 
-            // Configure Customer to Order relationship (One-to-Many)
+            
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.Customer)
-                .WithMany(c => c.OrderHistory) // Assuming Customer has a collection of Orders
+                .WithMany(c => c.OrderHistory) 
                 .HasForeignKey(o => o.CustomerId)
-                .OnDelete(DeleteBehavior.Restrict); // Restrict delete if there are orders
+                .OnDelete(DeleteBehavior.Restrict); 
 
-            // Configure OrderLine to MenuItem relationship (Many-to-One)
+            
             modelBuilder.Entity<OrderLine>()
                 .HasOne(ol => ol.MenuItem)
-                .WithMany() // Assuming MenuItem has no reference back to OrderLine
+                .WithMany() 
                 .HasForeignKey(ol => ol.MenuItemId)
-                .OnDelete(DeleteBehavior.Cascade); // Delete OrderLines when MenuItem is deleted
+                .OnDelete(DeleteBehavior.Cascade); 
 
-            // Configure OrderLine to Order relationship (Many-to-One)
+            
             modelBuilder.Entity<OrderLine>()
                 .HasOne(ol => ol.Order)
-                .WithMany(o => o.Items) // Order has many OrderLines
+                .WithMany(o => o.Items) 
                 .HasForeignKey(ol => ol.OrderId)
-                .OnDelete(DeleteBehavior.Cascade); // Delete OrderLines when Order is deleted
+                .OnDelete(DeleteBehavior.Cascade); 
 
-            // Configure MenuItem to Category relationship (Many-to-One)
+            
             modelBuilder.Entity<MenuItem>()
                 .HasOne(mi => mi.Category)
-                .WithMany(c => c.MenuItems) // Category has many MenuItems
+                .WithMany(c => c.MenuItems) 
                 .HasForeignKey(mi => mi.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict); // Restrict delete if MenuItems exist in the category
+                .OnDelete(DeleteBehavior.Restrict); 
 
-            // Configure Order entity properties
+            
             modelBuilder.Entity<Order>()
                 .Property(o => o.TotalPrice)
-                .HasColumnType("decimal(18,2)"); // Decimal precision for currency
+                .HasColumnType("decimal(18,2)"); 
 
             modelBuilder.Entity<Order>()
                 .Property(o => o.Discount)
-                .HasColumnType("decimal(18,2)"); // Discount as float
+                .HasColumnType("decimal(18,2)"); 
 
             modelBuilder.Entity<Order>()
                 .Property(o => o.Finished)
-                .IsRequired(); // Required boolean value
+                .IsRequired(); 
 
-            // Configure MenuItem entity properties
+            
             modelBuilder.Entity<MenuItem>()
                 .Property(mi => mi.Price)
                 .HasColumnType("decimal(18,2)");

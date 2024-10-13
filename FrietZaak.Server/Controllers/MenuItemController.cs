@@ -77,9 +77,17 @@ namespace FrietZaak.Server.Controllers
         //    return BadRequest("not implemented.");
         //}
 
+        public class MenuUpdateDTO
+        {
+            public string Name { get; set; }
+            public string  Description { get; set; }
+            public decimal Price { get; set; }
+            public decimal Discount { get; set; }
+        }
+
         [HttpPut]
         [Route("/menu/item/update/{id}")]
-        public IActionResult UpdateMenuItem([FromBody] MenuItem menuItem, int id)
+        public IActionResult UpdateMenuItem([FromBody] MenuUpdateDTO menuItem, int id)
         {
 
             var result = _context.MenuItems.FirstOrDefault(m => m.Id == id);

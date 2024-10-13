@@ -42,7 +42,8 @@ const router = createBrowserRouter([
             {
                 path: "order/admin/statistics",
                 element: <Statistics/>
-            }
+            },          
+            
         ]
     },
 ]);
