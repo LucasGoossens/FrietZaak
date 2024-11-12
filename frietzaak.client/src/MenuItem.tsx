@@ -95,13 +95,13 @@ function MenuItem({ id, name, description, price, discount }: MenuItemProps) {
                             </div>
                         }
                         <div className="self-end flex flex-row justify-evenly">
-                            <button onClick={handleMinus} className="p-1 font-bold bg-gray-200 mx-2">
+                            <button onClick={handleMinus} className="p-1 px-2 font-bold bg-gray-200 mx-2 border border-slate-400">
                                 -
                             </button>
                             <div className="p-1">
                                 {quantity}
                             </div>
-                            <button onClick={handlePlus} className="p-1 font-bold bg-gray-200 mx-2">
+                            <button onClick={handlePlus} className="p-1 px-2 font-bold bg-gray-200 mx-2 border border-slate-400">
                                 +
                             </button>
                             <button onClick={addToCart} className="p-1 px-2 bg-black text-white mx-1">

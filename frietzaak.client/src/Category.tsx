@@ -37,11 +37,11 @@ function Category({ id, name, menuItems }: CategoryProps) {
     return (
         <>
             <Overlays isOpen={isOpen} modal={currentModal} />
-            <div className="font-bold text-lg mx-5 mt-20 px-2 pb-3 text-black text-5xl">{name}:</div>
+            <div className="font-bold mx-5 mt-20 px-2 pb-3 text-black text-3xl">{name}:</div>
             {loggedInUser.id == 1 &&
                 <button onClick={handleCreateMenuItem} className="p-1 px-2">Create MenuItem</button>
             }
-            <div className="flex flex-row flex-wrap justify-between bg-slate-200 border rounded rounded-xl">
+            <div className="flex flex-row flex-wrap justify-between bg-slate-200 border rounded rounded-xl shadow-xl">
                 {
                     menuItems.map((menuItem) =>
                         <MenuItem id={menuItem.id} name={menuItem.name} description={menuItem.description} price={menuItem.price} discount={menuItem.discount} />

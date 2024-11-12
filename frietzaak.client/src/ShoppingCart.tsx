@@ -77,7 +77,7 @@ function ShoppingCart({ onClose }) {
     return (
         <>
             <div onClick={onClose} className="fixed inset-0 flex justify-center items-center w-screen h-screen">
-                <div onClick={(e) => e.stopPropagation()} className="overflow-y-scroll fixed top-6 right-10 w-1/3 h-2/3 bg-slate-100 shadow-lg border-slate-800 border-2 rounded text-black z-50">
+                <div onClick={(e) => e.stopPropagation()} className="overflow-y-scroll fixed top-3 right-10 w-1/3 h-2/3 bg-slate-100 shadow-lg border-slate-300 border-2 rounded text-black z-50">
 
                     {
                         Object.keys(currentCart).map(key => (
