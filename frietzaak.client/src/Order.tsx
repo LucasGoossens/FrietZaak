@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { userContext } from "./App"
 import { useNavigate } from "react-router-dom";
 import CurrentOrderMenuItem from "./CurrentOrderMenuItem";
+import PreviousOrder from "./PreviousOrder";
 
 type CurrentOrder = {
     id: number,
@@ -53,8 +54,7 @@ function Order() {
             .catch(error => console.error('Error:', error));
     }
     useEffect(() => {
-        getCurrentOrder();
-        console.log(currentOrder)
+        getCurrentOrder();        
     }, [loggedInUser]);
 
 
@@ -75,6 +75,22 @@ function Order() {
             getCurrentOrder();
         }, 500);
     }
+
+
+    const [orderHistory, setHistory] = useState<CurrentOrder[] | null>(null);
+
+    const getOrderHistory = () => {
+        fetch(`https://localhost:7167/order/get/orderhistory/${loggedInUser.id}`)
+            .then(response => response.json())
+            .then(data => {
+                setHistory(data);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    useEffect(() => {
+        getOrderHistory();
+    }, []);
 
     return (
         <>
@@ -111,7 +127,7 @@ function Order() {
 
                                         <div className="w-1/3"></div>
                                         <div className="w-1/3 font-bold">
-                                        Totaal: &euro;{currentOrder.totalPrice}
+                                            Totaal: &euro;{currentOrder.totalPrice}
                                         </div>
 
                                         <div className="w-1/3 flex flex-row justify-between font-semibold">
@@ -144,10 +160,21 @@ function Order() {
 
                     </div>
 
-                    <div className="text-black text-lg font-semibold border-b-4">
+                    <div className="text-black text-lg font-semibold border-b-4 shadow-xl">
                         Order History
                     </div>
-                    <div className="bg-slate-100 h-full">No order history</div>
+
+                    {orderHistory ? (
+                        <div className="max-h-screen overflow-y-scroll">
+                            {orderHistory.map((order, index) => (
+                                <PreviousOrder key={index} order={order} />
+                            ))}
+                        </div>
+                    )                
+
+                        :
+                        <div className="bg-slate-100 h-full">No order history</div>
+                    }
                 </div>
             </div>
         </>

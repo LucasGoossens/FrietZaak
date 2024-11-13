@@ -178,8 +178,50 @@ namespace FrietZaak.Server.Controllers
 
         }
 
+        //[HttpPut]
+        //[Route("order/replacepreviousorder/{orderId}")]
+        //public IActionResult ReplacePreviousOrder(int orderId)
+        //{
 
-        
+        //}
+
+
+        [HttpGet]
+        [Route("order/get/orderhistory/{userId}")]
+        public IActionResult GetOrderHistory(int userId)
+        {
+            var OrderHistory = _context.Orders
+                .Where(o => o.CustomerId == userId && o.Finished == true && o.TransactionCompleted == true)
+                .Select(order => new OrderDTO
+                {
+                    Id = order.Id,
+                    CustomerId = order.CustomerId,
+                    CustomerName = order.Customer.Name,
+                    Items = _context.OrderLines
+                        .Where(ol => ol.OrderId == order.Id)
+                        .Select(ol => new OrderLineDTO
+                        {
+                            MenuItemId = ol.MenuItem.Id,
+                            MenuItemName = ol.MenuItem.Name,
+                            MenuItemPrice = ol.MenuItem.Price,
+                            Quantity = ol.Quantity
+                        }).ToList(),
+                    TotalPrice = order.TotalPrice,
+                    Discount = order.Discount,
+                    Finished = order.Finished,
+                    TransactionCompleted = order.TransactionCompleted
+                })
+                .ToList();
+                
+            if(OrderHistory == null)
+            {
+                return NotFound(new { message = "No previous orders." });
+            }
+
+            return Ok(OrderHistory);
+
+        }
+
 
         [HttpGet]
         [Route("order/admin/statistics")]
