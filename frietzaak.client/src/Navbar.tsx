@@ -15,9 +15,7 @@ function Navbar() {
 
     useEffect(() => {
         const sum = Object.values(currentCart).reduce((accumulator: number, currentValue: number): number => accumulator + currentValue, 0)
-        setShoppingCartCount(sum);       
-        console.log(sum)
-
+        setShoppingCartCount(sum);               
         setIsFlashing(true);
         const timer = setTimeout(() => {
             setIsFlashing(false);
