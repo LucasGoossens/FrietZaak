@@ -57,18 +57,18 @@ function ShoppingCartMenuItem({ id, quantity }:any ) {
                     <div className="border-r-2 w-2/5 flex flex-col justify-between">
                         <div className="font-bold">{menuItem.name}</div>
                         <div className="">{menuItem.description}</div>
-                        <div className="italic">${menuItem.price - menuItem.discount}</div>
+                        <div className="italic">&euro;{menuItem.price - menuItem.discount}</div>
                     </div>
 
-                    <div className="border-r-2 w-2/5">
+                    <div className="border-r-2 w-2/5 self-end pb-8">
                         <div className="self-end flex flex-row justify-evenly">
-                            <button onClick={handleMinus} className="p-1 font-bold bg-gray-200 mx-2">
+                            <button onClick={handleMinus} className="p-1 font-bold bg-gray-200 mx-1">
                                 -
                             </button>
                             <div className="p-1">
                                 {quantity}
                             </div>
-                            <button onClick={handlePlus} className="p-1 font-bold bg-gray-200 mx-2">
+                            <button onClick={handlePlus} className="p-1 font-bold bg-gray-200 mx-1">
                                 +
                             </button>
                             <button onClick={handleRemoveFromBasket} className="p-1 px-2 bg-black text-white mx-1">

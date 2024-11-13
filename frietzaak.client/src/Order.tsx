@@ -111,7 +111,7 @@ function Order() {
 
                                         <div className="w-1/3"></div>
                                         <div className="w-1/3 font-bold">
-                                            Total: ${currentOrder.totalPrice}
+                                        Totaal: &euro;{currentOrder.totalPrice}
                                         </div>
 
                                         <div className="w-1/3 flex flex-row justify-between font-semibold">

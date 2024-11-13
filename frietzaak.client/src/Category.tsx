@@ -39,7 +39,7 @@ function Category({ id, name, menuItems }: CategoryProps) {
             <Overlays isOpen={isOpen} modal={currentModal} />
             <div className="font-bold mx-5 mt-20 px-2 pb-3 text-black text-3xl">{name}:</div>
             {loggedInUser.id == 1 &&
-                <button onClick={handleCreateMenuItem} className="p-1 px-2">Create MenuItem</button>
+                <button onClick={handleCreateMenuItem} className="p-1 px-2 mx-4">Create MenuItem</button>
             }
             <div className="flex flex-row flex-wrap justify-between bg-slate-200 border rounded rounded-xl shadow-xl">
                 {

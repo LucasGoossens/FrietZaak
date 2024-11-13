@@ -20,8 +20,8 @@ function DiscountPreviewMenuItem({ item }: Item) {
             <div className="flex flex-col justify-evenly">
                 <div className="w-1/2 px-3 font-bold text-3xl">{item.name}</div>
                 <div className="flex">
-                    <div className="w-1/2 px-3 pt-1 font-semibold line-through italic text-red-500 text-2xl">${item.price.toFixed(2)}</div>
-                    <div className="w-1/2 px-3 font-bold italic text-3xl">${(item.price - item.discount).toFixed(2)}</div>
+                    <div className="w-1/2 px-3 pt-1 font-semibold line-through italic text-red-500 text-2xl">&euro;{item.price.toFixed(2)}</div>
+                    <div className="w-1/2 px-3 font-bold italic text-3xl">&euro;{(item.price - item.discount).toFixed(2)}</div>
                 </div>
             </div>
         </div>

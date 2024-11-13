@@ -77,18 +77,20 @@ function ShoppingCart({ onClose }) {
     return (
         <>
             <div onClick={onClose} className="fixed inset-0 flex justify-center items-center w-screen h-screen">
-                <div onClick={(e) => e.stopPropagation()} className="overflow-y-scroll fixed top-3 right-10 w-1/3 h-2/3 bg-slate-100 shadow-lg border-slate-300 border-2 rounded text-black z-50">
+                <div onClick={(e) => e.stopPropagation()} className="overflow-y-scroll fixed top-14 right-10 w-1/3 h-2/3 bg-slate-100 shadow-lg border-slate-300 border-2 rounded text-black z-50">
 
                     {
                         Object.keys(currentCart).map(key => (
                             <ShoppingCartMenuItem key={key} id={key} quantity={currentCart[key]} />
                         ))
                     }
-                    <div className="flex flex-row justify-evenly">
+                    <div className="flex flex-col justify-evenly">
                         {!isDisabled ?
                             <>
-                                <div>Total Price: <b>${totalPrice.toFixed(2)}</b></div>
-                                <button onClick={confirmOrder} className="p-1 bg-slate-200">Order Now</button>
+                                <div className="flex text-lg flex-row justify-evenly py-3">
+                                    <div className="">Totaal: </div><b>&euro;{totalPrice.toFixed(2)}</b>
+                                </div>
+                                <button onClick={confirmOrder} className="p-1 bg-black-400 text-white w-11/12 self-center">Bestel Nu</button>
                             </> :
                             <div className="font-bold">No items added</div>
                         }

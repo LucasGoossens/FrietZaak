@@ -20,7 +20,7 @@ type Items = {
 function OrderAdminPendingOrder({ order}: { order: NewOrder}) {
     const [orderFinished, setFinished] = useState(order.finished == false ? false : true);
 
-    const handleFinished = (id) => {
+    const handleFinished = (id: number) => {
         fetch(`https://localhost:7167/order/setfinished/${id}`, {
             method: 'PUT',
             headers: {
@@ -44,7 +44,7 @@ function OrderAdminPendingOrder({ order}: { order: NewOrder}) {
     };
 
 
-    const handleTransaction = (id) => {
+    const handleTransaction = (id: number) => {
         fetch(`https://localhost:7167/order/transactioncompleted/${id}`, {
             method: 'PUT',
             headers: {
@@ -80,7 +80,7 @@ function OrderAdminPendingOrder({ order}: { order: NewOrder}) {
                       {order.items?.map((item: Items) => (
                           <>
                               <div className="border-b-2 mt-2 px-2 py-1 pb-4 flex ">
-                                  <div className="border w-28 h-28 bg-slate-300">img</div>
+                                  <div className="border w-28 h-28 bg-slate-300 bg-hamburger-one bg-center bg-cover"></div>
                                   <div className="flex flex-col px-6">
                                       <div className="text-lg py-2 font-semibold flex flex-row">{item.menuItemName} </div>
                                       <div className="text-gray-500">Quantity : <b className="text-black">{item.quantity}</b></div>

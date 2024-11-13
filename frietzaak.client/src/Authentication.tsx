@@ -48,7 +48,7 @@ function Authentication() {
                 return response.json();
             })
             .then(data => {                
-                setLogin(data);                              
+                setLogin(data);                
                 navigate("/order")
             })
             .catch(error => {
@@ -90,8 +90,8 @@ function Authentication() {
                     <div className="self-center flex items-center justify-evenly bg-slate-200 w-11/12 h-full shadow-2xl">
                         {view == "main" &&
                             <div className="flex flex-col self-center border border-white border-2 rounded rounded-lg p-10">
-                                <button onClick={clickLogin} className="text-xl border rounded-full border-4 border-black w-full my-3 px-5 py-1 bg-slate-600">Login</button>
-                                <button onClick={clickRegister} className="text-xl border rounded-full border-4 border-black w-full my-3 px-5 py-1 bg-slate-600">Register</button>
+                                <button onClick={clickLogin} className="text-xl border border-4  w-full my-3 px-5 py-1 bg-slate-600">Login</button>
+                                <button onClick={clickRegister} className="text-xl border border-4  w-full my-3 px-5 py-1 bg-slate-600">Register</button>
                             </div>
                         }
 
